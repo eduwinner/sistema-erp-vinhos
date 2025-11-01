@@ -3,13 +3,12 @@ package graphic;
 import database.ConnectionFactory;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
-import util.HashUtils;
-
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
+import javax.swing.*;
+import util.HashUtils;
 
 public class LoginWindow extends JFrame {
 
@@ -19,21 +18,23 @@ public class LoginWindow extends JFrame {
     private JButton btnEntrar;
 
     public LoginWindow() {
-        setTitle("Tela de Login");
-        setSize(300, 200);
+        setTitle("Tela de Login"); //título da janela
+        setSize(300, 200); // tamanho da janela
         setLocationRelativeTo(null);
+        //posiciona a janela no centro da tela
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLayout(null);
-        componentesCriar();
-        setVisible(true);
+        //ação de fechar a janela e finalizar o programa
+        setLayout(null);//desabilita o gerenciador de layout
+        componentesCriar();//método para criar os componentes
+        setVisible(true);//torna a janela visível           
     }
 
     private void componentesCriar() {
 
-        lblTitulo = new JLabel("Sistema Vinhos");
-        lblTitulo.setBounds(35, 20, 280, 30);
-        lblTitulo.setFont(new Font(Font.MONOSPACED, Font.BOLD, 26));
-        getContentPane().add(lblTitulo);
+        lblTitulo = new JLabel("Sistema Vinhos");//inicializa o componente rótulo
+        lblTitulo.setBounds(35, 20, 280, 30);//define posição e tamanho do rótulo
+        lblTitulo.setFont(new Font(Font.MONOSPACED, Font.BOLD, 26));//define fonte do rótulo
+        getContentPane().add(lblTitulo);//adiciona o rótulo ao conteúdo da janela
 
         lblUsuario = new JLabel("Usuário:");
         lblUsuario.setBounds(10, 70, 80, 30);
@@ -71,7 +72,7 @@ public class LoginWindow extends JFrame {
                 }
 
                 try {
-                    Connection conexao = ConnectionFactory.getConnection("localhost", 5432, "controlevinhos", "postgres", "manager");
+                    Connection conexao = ConnectionFactory.getConnection("localhost", 5454, "controlevinhos", "postgres", "Eduadm@23#");
                     if (conexao != null) {
 
                         UsuarioModel usuarioModel = new UsuarioModel();
