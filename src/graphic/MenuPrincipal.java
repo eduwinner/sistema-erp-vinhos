@@ -49,7 +49,7 @@ public class MenuPrincipal extends JFrame {
 
     static class DesktopComFundo extends JDesktopPane {
 
-        private Image imagemFundo;
+        private final Image imagemFundo;
 
         public DesktopComFundo(String caminhoImagem) {
             this.imagemFundo = new ImageIcon(caminhoImagem).getImage();//adiciona a imagem de fundo

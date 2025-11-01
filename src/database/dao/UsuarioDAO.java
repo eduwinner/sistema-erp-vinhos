@@ -1,7 +1,6 @@
 package database.dao;
 
 import database.model.UsuarioModel;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,10 +8,10 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
 
-    private Connection conexao;
+    private final Connection conexao;
 
-    private String selectByUsuarioESenha = "SELECT * FROM usuarios WHERE usuario = ? AND senha = ?";
-    private PreparedStatement pstSelectByUsuarioESenha;
+    private final String selectByUsuarioESenha = "SELECT * FROM usuarios WHERE usuario = ? AND senha = ?";
+    private final PreparedStatement pstSelectByUsuarioESenha;
 
     public UsuarioDAO(Connection conexao) throws SQLException {
         this.conexao = conexao;

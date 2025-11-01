@@ -57,7 +57,8 @@ public class LoginWindow extends JFrame {
             public void actionPerformed(ActionEvent e) {
 
                 String usuario = txtUsuario.getText();
-                String senha = txtSenha.getText();
+                char[] senhaChars = txtSenha.getPassword();
+                String senha = new String(senhaChars);
 
                 if (usuario.isEmpty()) {
                     JOptionPane.showMessageDialog(null, "Campo <Usuário> obrigatório!");
@@ -74,9 +75,10 @@ public class LoginWindow extends JFrame {
                 try {
                     Connection conexao = ConnectionFactory.getConnection("localhost", 5454, "controlevinhos", "postgres", "Eduadm@23#");
                     if (conexao != null) {
-
                         UsuarioModel usuarioModel = new UsuarioModel();
                         usuarioModel.setUsuario(usuario);
+                        usuarioModel.setSenha(HashUtils.criarMD5(senha));
+                        java.util.Arrays.fill(senhaChars, '\0');
                         usuarioModel.setSenha(HashUtils.criarMD5(senha));
 
                         UsuarioDAO usuarioDAO = new UsuarioDAO(conexao);
@@ -89,8 +91,10 @@ public class LoginWindow extends JFrame {
                         dispose();
                     }
                 } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Não foi possível conectar no banco de dados: "+ex.getMessage());
+                    // Log the exception at SEVERE level without printing the stack trace to standard output
+                    java.util.logging.Logger.getLogger(LoginWindow.class.getName())
+                            .log(java.util.logging.Level.SEVERE, "Não foi possível conectar no banco de dados", ex);
+                    JOptionPane.showMessageDialog(null, "Não foi possível conectar no banco de dados: " + ex.getMessage());
                 }
             }
         });
@@ -99,6 +103,7 @@ public class LoginWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        new LoginWindow();
+        // Ensure Swing components are created on the Event Dispatch Thread
+        SwingUtilities.invokeLater(LoginWindow::new);
     }
 }
